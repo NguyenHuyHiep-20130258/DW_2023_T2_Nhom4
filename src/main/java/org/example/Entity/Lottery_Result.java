@@ -1,16 +1,13 @@
-package org.example;
+package org.example.Entity;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
-public class Lottery {
+public class Lottery_Result {
     String region;
     String province;
     String date;
     String prize;
     String winning_number;
 
-    public Lottery(String region, String province, String date, String prize, String winning_number) {
+    public Lottery_Result(String region, String province, String date, String prize, String winning_number) {
         this.region = region;
         this.province = province;
         this.date = date;
