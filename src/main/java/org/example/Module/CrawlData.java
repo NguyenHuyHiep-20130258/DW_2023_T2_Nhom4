@@ -37,6 +37,7 @@ public class CrawlData {
                     String prize = "Giải " + table.select("tbody tr:nth-child(" + j + ") td:first-child").get(0).text();
                     for (Element number : numbers) {
                         LotteryResult result = new LotteryResult("Miền Bắc", provinceName, dateNow, prize, number.text());
+                        DataToExcel.saveToFile(result, dateNow, location);
                         System.out.println(result);
                     }
                 }
@@ -50,10 +51,12 @@ public class CrawlData {
                         for (Element number : numbers) {
                             if(substring.equals("mt")) {
                                 LotteryResult result = new LotteryResult("Miền Trung", provinceName, dateNow, prize, number.text());
+                                DataToExcel.saveToFile(result, dateNow, location);
                                 System.out.println(result);
                             }
                             else {
                                 LotteryResult result = new LotteryResult("Miền Nam", provinceName, dateNow, prize, number.text());
+                                DataToExcel.saveToFile(result, dateNow, location);
                                 System.out.println(result);
                             }
 
