@@ -11,7 +11,7 @@
  Target Server Version : 100427
  File Encoding         : 65001
 
- Date: 05/12/2023 19:38:48
+ Date: 07/12/2023 12:52:39
 */
 
 SET NAMES utf8mb4;
@@ -55,7 +55,7 @@ CREATE TABLE `data_files`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `fk_data_files_df_config`(`df_config_id` ASC) USING BTREE,
   CONSTRAINT `fk_data_files_df_config` FOREIGN KEY (`df_config_id`) REFERENCES `data_file_configs` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 509 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 579 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of data_files
@@ -115,24 +115,111 @@ INSERT INTO `data_files` VALUES (487, 1, 'XSKT_04_12_2023', 'ERROR', '2023-12-04
 INSERT INTO `data_files` VALUES (488, 1, 'XSKT_04_12_2023', 'LOADINGM', '2023-12-04 12:47:42', 'Data is loadingm', '2023-12-04 12:47:42', '9999-12-31 23:59:59');
 INSERT INTO `data_files` VALUES (489, 1, 'XSKT_04_12_2023', 'LOADEDM', '2023-12-04 12:47:42', 'Data is loadedm', '2023-12-04 12:47:42', '9999-12-31 23:59:59');
 INSERT INTO `data_files` VALUES (490, 1, 'XSKT_04_12_2023', 'FINISHED', '2023-12-04 12:47:42', 'Data is finished', '2023-12-04 12:47:42', '9999-12-31 23:59:59');
-INSERT INTO `data_files` VALUES (491, 1, 'XSKT_05_12_2023', 'CRAWLING', '2023-12-05 19:34:10', 'Data is crawling', '2023-12-05 19:34:10', '9999-12-31 23:59:59');
-INSERT INTO `data_files` VALUES (492, 1, 'XSKT_05_12_2023', 'CRAWLING', '2023-12-05 19:34:31', 'Data is crawling', '2023-12-05 19:34:31', '9999-12-31 23:59:59');
-INSERT INTO `data_files` VALUES (493, 1, 'XSKT_05_12_2023', 'CRAWLED', '2023-12-05 19:34:37', 'Data is crawled', '2023-12-05 19:34:37', '9999-12-31 23:59:59');
-INSERT INTO `data_files` VALUES (494, 1, 'XSKT_05_12_2023', 'EXTRACTING', '2023-12-05 19:34:37', 'Data is extracting', '2023-12-05 19:34:37', '9999-12-31 23:59:59');
-INSERT INTO `data_files` VALUES (495, 1, 'XSKT_05_12_2023', 'EXTRACTED', '2023-12-05 19:34:37', 'Data is extracted', '2023-12-05 19:34:37', '9999-12-31 23:59:59');
-INSERT INTO `data_files` VALUES (496, 1, 'XSKT_05_12_2023', 'TRANSFORMING', '2023-12-05 19:34:37', 'Data is transforming', '2023-12-05 19:34:37', '9999-12-31 23:59:59');
-INSERT INTO `data_files` VALUES (497, 1, 'XSKT_05_12_2023', 'TRANSFORMED', '2023-12-05 19:34:37', 'Data is transformed', '2023-12-05 19:34:37', '9999-12-31 23:59:59');
-INSERT INTO `data_files` VALUES (498, 1, 'XSKT_05_12_2023', 'LOADINGWH', '2023-12-05 19:34:37', 'Data is loadingwh', '2023-12-05 19:34:37', '9999-12-31 23:59:59');
-INSERT INTO `data_files` VALUES (499, 1, 'XSKT_05_12_2023', 'LOADEDWH', '2023-12-05 19:34:37', 'Data is loadedwh', '2023-12-05 19:34:37', '9999-12-31 23:59:59');
-INSERT INTO `data_files` VALUES (500, 1, 'XSKT_05_12_2023', 'AGGREGATING', '2023-12-05 19:34:37', 'Data is aggregating', '2023-12-05 19:34:37', '9999-12-31 23:59:59');
-INSERT INTO `data_files` VALUES (501, 1, 'XSKT_05_12_2023', 'ERROR', '2023-12-05 19:34:38', 'Fail to aggregate data: java.sql.SQLSyntaxErrorException: Unknown column \'date\' in \'where clause\'', '2023-12-05 19:34:38', '9999-12-31 23:59:59');
-INSERT INTO `data_files` VALUES (502, 1, 'XSKT_05_12_2023', 'AGGREGATING', '2023-12-05 19:36:51', 'Data is aggregating', '2023-12-05 19:36:51', '9999-12-31 23:59:59');
-INSERT INTO `data_files` VALUES (503, 1, 'XSKT_05_12_2023', 'ERROR', '2023-12-05 19:36:51', 'Fail to aggregate data: java.sql.SQLSyntaxErrorException: PROCEDURE control.AggregateData does not exist', '2023-12-05 19:36:51', '9999-12-31 23:59:59');
-INSERT INTO `data_files` VALUES (504, 1, 'XSKT_05_12_2023', 'AGGREGATING', '2023-12-05 19:37:03', 'Data is aggregating', '2023-12-05 19:37:03', '9999-12-31 23:59:59');
-INSERT INTO `data_files` VALUES (505, 1, 'XSKT_05_12_2023', 'AGGREGATED', '2023-12-05 19:37:03', 'Data is aggregated', '2023-12-05 19:37:03', '9999-12-31 23:59:59');
-INSERT INTO `data_files` VALUES (506, 1, 'XSKT_05_12_2023', 'LOADINGM', '2023-12-05 19:37:03', 'Data is loadingm', '2023-12-05 19:37:03', '9999-12-31 23:59:59');
-INSERT INTO `data_files` VALUES (507, 1, 'XSKT_05_12_2023', 'LOADEDM', '2023-12-05 19:37:03', 'Data is loadedm', '2023-12-05 19:37:03', '9999-12-31 23:59:59');
-INSERT INTO `data_files` VALUES (508, 1, 'XSKT_05_12_2023', 'FINISHED', '2023-12-05 19:37:03', 'Data is finished', '2023-12-05 19:37:03', '9999-12-31 23:59:59');
+INSERT INTO `data_files` VALUES (537, 1, 'XSKT_05_12_2023', 'CRAWLING', '2023-12-05 23:29:56', 'Data is crawling', '2023-12-05 23:29:56', '9999-12-31 23:59:59');
+INSERT INTO `data_files` VALUES (538, 1, 'XSKT_05_12_2023', 'CRAWLED', '2023-12-05 23:30:03', 'Data is crawled', '2023-12-05 23:30:03', '9999-12-31 23:59:59');
+INSERT INTO `data_files` VALUES (539, 1, 'XSKT_05_12_2023', 'EXTRACTING', '2023-12-05 23:30:03', 'Data is extracting', '2023-12-05 23:30:03', '9999-12-31 23:59:59');
+INSERT INTO `data_files` VALUES (540, 1, 'XSKT_05_12_2023', 'EXTRACTED', '2023-12-05 23:30:04', 'Data is extracted', '2023-12-05 23:30:04', '9999-12-31 23:59:59');
+INSERT INTO `data_files` VALUES (541, 1, 'XSKT_05_12_2023', 'TRANSFORMING', '2023-12-05 23:30:04', 'Data is transforming', '2023-12-05 23:30:04', '9999-12-31 23:59:59');
+INSERT INTO `data_files` VALUES (542, 1, 'XSKT_05_12_2023', 'TRANSFORMED', '2023-12-05 23:30:04', 'Data is transformed', '2023-12-05 23:30:04', '9999-12-31 23:59:59');
+INSERT INTO `data_files` VALUES (543, 1, 'XSKT_05_12_2023', 'LOADINGWH', '2023-12-05 23:30:04', 'Data is loadingwh', '2023-12-05 23:30:04', '9999-12-31 23:59:59');
+INSERT INTO `data_files` VALUES (544, 1, 'XSKT_05_12_2023', 'LOADEDWH', '2023-12-05 23:30:04', 'Data is loadedwh', '2023-12-05 23:30:04', '9999-12-31 23:59:59');
+INSERT INTO `data_files` VALUES (545, 1, 'XSKT_05_12_2023', 'AGGREGATING', '2023-12-05 23:30:04', 'Data is aggregating', '2023-12-05 23:30:04', '9999-12-31 23:59:59');
+INSERT INTO `data_files` VALUES (546, 1, 'XSKT_05_12_2023', 'AGGREGATED', '2023-12-05 23:30:04', 'Data is aggregated', '2023-12-05 23:30:04', '9999-12-31 23:59:59');
+INSERT INTO `data_files` VALUES (547, 1, 'XSKT_05_12_2023', 'LOADINGM', '2023-12-05 23:30:04', 'Data is loadingm', '2023-12-05 23:30:04', '9999-12-31 23:59:59');
+INSERT INTO `data_files` VALUES (548, 1, 'XSKT_05_12_2023', 'LOADEDM', '2023-12-05 23:30:04', 'Data is loadedm', '2023-12-05 23:30:04', '9999-12-31 23:59:59');
+INSERT INTO `data_files` VALUES (549, 1, 'XSKT_05_12_2023', 'FINISHED', '2023-12-05 23:30:04', 'Data is finished', '2023-12-05 23:30:04', '9999-12-31 23:59:59');
+INSERT INTO `data_files` VALUES (550, 1, 'XSKT_06_12_2023', 'CRAWLING', '2023-12-06 20:35:52', 'Data is crawling', '2023-12-06 20:35:52', '9999-12-31 23:59:59');
+INSERT INTO `data_files` VALUES (551, 1, 'XSKT_06_12_2023', 'CRAWLED', '2023-12-06 20:35:58', 'Data is crawled', '2023-12-06 20:35:58', '9999-12-31 23:59:59');
+INSERT INTO `data_files` VALUES (552, 1, 'XSKT_06_12_2023', 'EXTRACTING', '2023-12-06 20:35:58', 'Data is extracting', '2023-12-06 20:35:58', '9999-12-31 23:59:59');
+INSERT INTO `data_files` VALUES (553, 1, 'XSKT_06_12_2023', 'EXTRACTED', '2023-12-06 20:35:59', 'Data is extracted', '2023-12-06 20:35:59', '9999-12-31 23:59:59');
+INSERT INTO `data_files` VALUES (554, 1, 'XSKT_06_12_2023', 'TRANSFORMING', '2023-12-06 20:35:59', 'Data is transforming', '2023-12-06 20:35:59', '9999-12-31 23:59:59');
+INSERT INTO `data_files` VALUES (555, 1, 'XSKT_06_12_2023', 'TRANSFORMED', '2023-12-06 20:35:59', 'Data is transformed', '2023-12-06 20:35:59', '9999-12-31 23:59:59');
+INSERT INTO `data_files` VALUES (556, 1, 'XSKT_06_12_2023', 'LOADINGWH', '2023-12-06 20:35:59', 'Data is loadingwh', '2023-12-06 20:35:59', '9999-12-31 23:59:59');
+INSERT INTO `data_files` VALUES (557, 1, 'XSKT_06_12_2023', 'LOADEDWH', '2023-12-06 20:35:59', 'Data is loadedwh', '2023-12-06 20:35:59', '9999-12-31 23:59:59');
+INSERT INTO `data_files` VALUES (558, 1, 'XSKT_06_12_2023', 'AGGREGATING', '2023-12-06 20:35:59', 'Data is aggregating', '2023-12-06 20:35:59', '9999-12-31 23:59:59');
+INSERT INTO `data_files` VALUES (559, 1, 'XSKT_06_12_2023', 'AGGREGATED', '2023-12-06 20:35:59', 'Data is aggregated', '2023-12-06 20:35:59', '9999-12-31 23:59:59');
+INSERT INTO `data_files` VALUES (560, 1, 'XSKT_06_12_2023', 'LOADINGM', '2023-12-06 20:35:59', 'Data is loadingm', '2023-12-06 20:35:59', '9999-12-31 23:59:59');
+INSERT INTO `data_files` VALUES (561, 1, 'XSKT_06_12_2023', 'LOADEDM', '2023-12-06 20:35:59', 'Data is loadedm', '2023-12-06 20:35:59', '9999-12-31 23:59:59');
+INSERT INTO `data_files` VALUES (562, 1, 'XSKT_06_12_2023', 'FINISHED', '2023-12-06 20:35:59', 'Data is finished', '2023-12-06 20:35:59', '9999-12-31 23:59:59');
+INSERT INTO `data_files` VALUES (563, 1, 'XSKT_07_12_2023', 'CRAWLING', '2023-12-07 12:49:30', 'Data is crawling', '2023-12-07 12:49:30', '9999-12-31 23:59:59');
+INSERT INTO `data_files` VALUES (564, 1, 'XSKT_07_12_2023', 'CRAWLING', '2023-12-07 12:49:56', 'Data is crawling', '2023-12-07 12:49:56', '9999-12-31 23:59:59');
+INSERT INTO `data_files` VALUES (565, 1, 'XSKT_07_12_2023', 'CRAWLED', '2023-12-07 12:50:12', 'Data is crawled', '2023-12-07 12:50:12', '9999-12-31 23:59:59');
+INSERT INTO `data_files` VALUES (566, 1, 'XSKT_07_12_2023', 'EXTRACTING', '2023-12-07 12:50:12', 'Data is extracting', '2023-12-07 12:50:12', '9999-12-31 23:59:59');
+INSERT INTO `data_files` VALUES (567, 1, 'XSKT_07_12_2023', 'EXTRACTED', '2023-12-07 12:50:13', 'Data is extracted', '2023-12-07 12:50:13', '9999-12-31 23:59:59');
+INSERT INTO `data_files` VALUES (568, 1, 'XSKT_07_12_2023', 'TRANSFORMING', '2023-12-07 12:50:13', 'Data is transforming', '2023-12-07 12:50:13', '9999-12-31 23:59:59');
+INSERT INTO `data_files` VALUES (569, 1, 'XSKT_07_12_2023', 'ERROR', '2023-12-07 12:50:13', 'Fail to tranform: java.sql.SQLSyntaxErrorException: PROCEDURE control.Transform does not exist', '2023-12-07 12:50:13', '9999-12-31 23:59:59');
+INSERT INTO `data_files` VALUES (570, 1, 'XSKT_07_12_2023', 'TRANSFORMING', '2023-12-07 12:50:54', 'Data is transforming', '2023-12-07 12:50:54', '9999-12-31 23:59:59');
+INSERT INTO `data_files` VALUES (571, 1, 'XSKT_07_12_2023', 'TRANSFORMED', '2023-12-07 12:50:54', 'Data is transformed', '2023-12-07 12:50:54', '9999-12-31 23:59:59');
+INSERT INTO `data_files` VALUES (572, 1, 'XSKT_07_12_2023', 'LOADINGWH', '2023-12-07 12:50:54', 'Data is loadingwh', '2023-12-07 12:50:54', '9999-12-31 23:59:59');
+INSERT INTO `data_files` VALUES (573, 1, 'XSKT_07_12_2023', 'LOADEDWH', '2023-12-07 12:50:54', 'Data is loadedwh', '2023-12-07 12:50:54', '9999-12-31 23:59:59');
+INSERT INTO `data_files` VALUES (574, 1, 'XSKT_07_12_2023', 'AGGREGATING', '2023-12-07 12:50:54', 'Data is aggregating', '2023-12-07 12:50:54', '9999-12-31 23:59:59');
+INSERT INTO `data_files` VALUES (575, 1, 'XSKT_07_12_2023', 'AGGREGATED', '2023-12-07 12:50:54', 'Data is aggregated', '2023-12-07 12:50:54', '9999-12-31 23:59:59');
+INSERT INTO `data_files` VALUES (576, 1, 'XSKT_07_12_2023', 'LOADINGM', '2023-12-07 12:50:54', 'Data is loadingm', '2023-12-07 12:50:54', '9999-12-31 23:59:59');
+INSERT INTO `data_files` VALUES (577, 1, 'XSKT_07_12_2023', 'LOADEDM', '2023-12-07 12:50:54', 'Data is loadedm', '2023-12-07 12:50:54', '9999-12-31 23:59:59');
+INSERT INTO `data_files` VALUES (578, 1, 'XSKT_07_12_2023', 'FINISHED', '2023-12-07 12:50:54', 'Data is finished', '2023-12-07 12:50:54', '9999-12-31 23:59:59');
+
+-- ----------------------------
+-- Procedure structure for AddPrizeDim
+-- ----------------------------
+DROP PROCEDURE IF EXISTS `AddPrizeDim`;
+delimiter ;;
+CREATE PROCEDURE `AddPrizeDim`()
+BEGIN
+ INSERT IGNORE INTO warehouse.prize_dim (name, dt_changed, dt_expired)
+    SELECT DISTINCT
+        lr.prize,
+				 NOW(),  -- Thêm ngày hiện tại vào trường created_at
+        '9999-12-31 23:59:59'   -- Thêm giá trị 99999 vào trường updated_at
+    FROM
+        warehouse.lottery_result lr
+				
+    WHERE
+        lr.prize NOT IN (SELECT name FROM warehouse.prize_dim);
+END
+;;
+delimiter ;
+
+-- ----------------------------
+-- Procedure structure for AddProvinceDim
+-- ----------------------------
+DROP PROCEDURE IF EXISTS `AddProvinceDim`;
+delimiter ;;
+CREATE PROCEDURE `AddProvinceDim`()
+BEGIN
+ INSERT IGNORE INTO warehouse.province_dim (name, dt_changed, dt_expired)
+    SELECT DISTINCT
+        lr.province, 
+				 NOW(),  -- Thêm ngày hiện tại vào trường created_at
+         '9999-12-31 23:59:59'   -- Thêm giá trị 99999 vào trường updated_at
+    FROM
+        warehouse.lottery_result lr
+				
+    WHERE
+        lr.province NOT IN (SELECT name FROM warehouse.province_dim);
+END
+;;
+delimiter ;
+
+-- ----------------------------
+-- Procedure structure for AddRegionDim
+-- ----------------------------
+DROP PROCEDURE IF EXISTS `AddRegionDim`;
+delimiter ;;
+CREATE PROCEDURE `AddRegionDim`()
+BEGIN
+    -- Thêm các giá trị mới vào bảng region_dim nếu chưa tồn tại
+    INSERT IGNORE INTO warehouse.region_dim (name, dt_changed, dt_expired)
+    SELECT DISTINCT
+        lr.region,
+				 NOW(),  -- Thêm ngày hiện tại vào trường created_at
+         '9999-12-31 23:59:59'   -- Thêm giá trị 99999 vào trường updated_at
+    FROM
+        warehouse.lottery_result lr
+    WHERE
+        lr.region NOT IN (SELECT name FROM warehouse.region_dim);
+END
+;;
+delimiter ;
 
 -- ----------------------------
 -- Procedure structure for AggregateData
@@ -180,6 +267,24 @@ BEGIN
     INSERT INTO warehouse.lottery_result (region, province, date, prize, winning_number)
     SELECT region, province, date, prize, winning_number
     FROM staging.lottery_result_staging;
+END
+;;
+delimiter ;
+
+-- ----------------------------
+-- Procedure structure for ExtractToStaging
+-- ----------------------------
+DROP PROCEDURE IF EXISTS `ExtractToStaging`;
+delimiter ;;
+CREATE PROCEDURE `ExtractToStaging`(in_region VARCHAR(255),
+    in_province VARCHAR(255),
+    in_date DATE,
+    in_prize VARCHAR(255),
+    in_winning_number VARCHAR(255))
+BEGIN
+-- 		TRUNCATE staging.lottery_result_staging;
+    INSERT INTO staging.lottery_result_staging (region, province, date, prize, winning_number)
+    VALUES (in_region, in_province, in_date, in_prize, in_winning_number);
 END
 ;;
 delimiter ;
@@ -258,23 +363,6 @@ END
 delimiter ;
 
 -- ----------------------------
--- Procedure structure for LoadToStaging
--- ----------------------------
-DROP PROCEDURE IF EXISTS `LoadToStaging`;
-delimiter ;;
-CREATE PROCEDURE `LoadToStaging`(in_region VARCHAR(255),
-    in_province VARCHAR(255),
-    in_date DATE,
-    in_prize VARCHAR(255),
-    in_winning_number VARCHAR(255))
-BEGIN
-    INSERT INTO staging.lottery_result_staging (region, province, date, prize, winning_number)
-    VALUES (in_region, in_province, in_date, in_prize, in_winning_number);
-END
-;;
-delimiter ;
-
--- ----------------------------
 -- Procedure structure for LoadToWareHouse
 -- ----------------------------
 DROP PROCEDURE IF EXISTS `LoadToWareHouse`;
@@ -289,11 +377,11 @@ END
 delimiter ;
 
 -- ----------------------------
--- Procedure structure for TranferToFact
+-- Procedure structure for Transform
 -- ----------------------------
-DROP PROCEDURE IF EXISTS `TranferToFact`;
+DROP PROCEDURE IF EXISTS `Transform`;
 delimiter ;;
-CREATE PROCEDURE `TranferToFact`()
+CREATE PROCEDURE `Transform`()
 BEGIN
  DROP TEMPORARY TABLE IF EXISTS temp_fact;
 CREATE TEMPORARY TABLE temp_fact AS
@@ -315,69 +403,6 @@ CREATE TEMPORARY TABLE temp_fact AS
         warehouse.date_dim dd ON lr.date = dd.full_date
     LEFT JOIN
         warehouse.prize_dim prd ON lr.prize = prd.name;
-END
-;;
-delimiter ;
-
--- ----------------------------
--- Procedure structure for TransformPrizeDim
--- ----------------------------
-DROP PROCEDURE IF EXISTS `TransformPrizeDim`;
-delimiter ;;
-CREATE PROCEDURE `TransformPrizeDim`()
-BEGIN
- INSERT IGNORE INTO warehouse.prize_dim (name, dt_changed, dt_expired)
-    SELECT DISTINCT
-        lr.prize,
-				 NOW(),  -- Thêm ngày hiện tại vào trường created_at
-        '9999-12-31 23:59:59'   -- Thêm giá trị 99999 vào trường updated_at
-    FROM
-        warehouse.lottery_result lr
-				
-    WHERE
-        lr.prize NOT IN (SELECT name FROM warehouse.prize_dim);
-END
-;;
-delimiter ;
-
--- ----------------------------
--- Procedure structure for TransformProvinceDim
--- ----------------------------
-DROP PROCEDURE IF EXISTS `TransformProvinceDim`;
-delimiter ;;
-CREATE PROCEDURE `TransformProvinceDim`()
-BEGIN
- INSERT IGNORE INTO warehouse.province_dim (name, dt_changed, dt_expired)
-    SELECT DISTINCT
-        lr.province, 
-				 NOW(),  -- Thêm ngày hiện tại vào trường created_at
-         '9999-12-31 23:59:59'   -- Thêm giá trị 99999 vào trường updated_at
-    FROM
-        warehouse.lottery_result lr
-				
-    WHERE
-        lr.province NOT IN (SELECT name FROM warehouse.province_dim);
-END
-;;
-delimiter ;
-
--- ----------------------------
--- Procedure structure for TransformRegionDim
--- ----------------------------
-DROP PROCEDURE IF EXISTS `TransformRegionDim`;
-delimiter ;;
-CREATE PROCEDURE `TransformRegionDim`()
-BEGIN
-    -- Thêm các giá trị mới vào bảng region_dim nếu chưa tồn tại
-    INSERT IGNORE INTO warehouse.region_dim (name, dt_changed, dt_expired)
-    SELECT DISTINCT
-        lr.region,
-				 NOW(),  -- Thêm ngày hiện tại vào trường created_at
-         '9999-12-31 23:59:59'   -- Thêm giá trị 99999 vào trường updated_at
-    FROM
-        warehouse.lottery_result lr
-    WHERE
-        lr.region NOT IN (SELECT name FROM warehouse.region_dim);
 END
 ;;
 delimiter ;

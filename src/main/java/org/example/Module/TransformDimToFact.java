@@ -11,10 +11,10 @@ public class TransformDimToFact {
         try {
             DBConnect.insertStatus(connection, id, "TRANSFORMING", date);
             CallableStatement callableStatement = connection.prepareCall("{call CopyDataFromStagingToWarehouse()}");
-            CallableStatement callableStatement1 = connection.prepareCall("{call TransformRegionDim()}");
-            CallableStatement callableStatement2 = connection.prepareCall("{call TransformProvinceDim()}");
-            CallableStatement callableStatement3 = connection.prepareCall("{call TransformPrizeDim()}");
-            CallableStatement callableStatement4 = connection.prepareCall("{call TranferToFact()}");
+            CallableStatement callableStatement1 = connection.prepareCall("{call AddRegionDim()}");
+            CallableStatement callableStatement2 = connection.prepareCall("{call AddProvinceDim()}");
+            CallableStatement callableStatement3 = connection.prepareCall("{call AddPrizeDim()}");
+            CallableStatement callableStatement4 = connection.prepareCall("{call Transform()}");
 
             callableStatement.execute();
             callableStatement1.execute();
