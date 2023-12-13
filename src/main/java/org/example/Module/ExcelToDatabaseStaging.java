@@ -5,6 +5,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.example.Database.DBConnect;
+import org.example.Mail.ErrorEmailSender;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -77,14 +78,17 @@ public class ExcelToDatabaseStaging {
                 DBConnect.insertStatus(connection, id, "EXTRACTED", date);
             } else {
                 DBConnect.insertErrorStatus(connection, id, "ERROR", "Fail to load to staging", date);
+                ErrorEmailSender.sendMail("Extract to staging", "Can't not get file");
                 DBConnect.getConnection().close();
             }
         } catch (IOException e) {
             e.printStackTrace();
             DBConnect.insertErrorStatus(connection, id,"ERROR", "Fail to load to staging: " + e, date);
+            ErrorEmailSender.sendMail("Extract to staging", "Fail " + e);
             DBConnect.getConnection().close();
         } catch (SQLException e) {
             DBConnect.insertErrorStatus(connection, id,"ERROR", "Fail to load to staging: " + e, date);
+            ErrorEmailSender.sendMail("Extract to staging", "Fail " + e);
             DBConnect.getConnection().close();
             throw new RuntimeException(e);
         }

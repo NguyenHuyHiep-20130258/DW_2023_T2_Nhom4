@@ -1,13 +1,14 @@
 package org.example.Module;
 
 import org.example.Database.DBConnect;
+import org.example.Mail.ErrorEmailSender;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.SQLException;
 
 public class LoadToWareHouse {
-    public static void LoadtoWareHouse(int id, Connection connection, String date) {
+    public static void LoadtoWareHouse(int id, Connection connection, String date) throws SQLException {
         try {
             DBConnect.insertStatus(connection, id, "LOADINGWH", date);
             CallableStatement callableStatement = connection.prepareCall("{call LoadToWareHouse()}");
@@ -18,8 +19,10 @@ public class LoadToWareHouse {
             DBConnect.insertStatus(connection, id, "LOADEDWH", date);
         }
         catch (SQLException e) {
-            DBConnect.insertErrorStatus(connection, id,"ERROR", "Fail to load to warehouse: " + e, date);
             e.printStackTrace();
+            DBConnect.insertErrorStatus(connection, id,"ERROR", "Fail to load to warehouse: " + e, date);
+            ErrorEmailSender.sendMail("Load to warehouse", "Fail " + e);
+            DBConnect.getConnection().close();
         }
 
     }
