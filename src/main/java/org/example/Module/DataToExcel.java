@@ -13,26 +13,33 @@ import org.example.Entity.LotteryResult;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.List;
 
 public class DataToExcel {
-    public static void saveToFile(LotteryResult lotteryResult, String dateNow, String location) throws IOException {
+    public static void saveToFile(List<LotteryResult> resultList, String dateNow, String location) throws IOException {
         try {
             String excelFilePath = location + "\\XSKT_" + dateNow + ".xlsx";
-//            String excelFilePath = "E:\\WareHouse\\XSKT_2023-10-1.xlsx";
-
             Workbook workbook = getWorkbook(excelFilePath);
             Sheet sheet = workbook.getSheetAt(0);
 
             int lastRowIndex = sheet.getLastRowNum();
 
-            Row rowToInsert = sheet.getRow(lastRowIndex + 1);
-            if (rowToInsert == null) rowToInsert = sheet.createRow(lastRowIndex + 1);
-            Field[] fields = lotteryResult.getClass().getDeclaredFields();
-            for (int i = 0; i < 5; i++) {
-                Cell cell1 = rowToInsert.createCell(i);
-                Field field = fields[i];
-                field.setAccessible(true);
-                cell1.setCellValue(field.get(lotteryResult).toString());
+            for (LotteryResult lotteryResult : resultList) {
+                lastRowIndex++;
+                Row rowToInsert = sheet.getRow(lastRowIndex);
+                if (rowToInsert == null) rowToInsert = sheet.createRow(lastRowIndex);
+
+                Field[] fields = lotteryResult.getClass().getDeclaredFields();
+                for (int i = 0; i < 5; i++) {
+                    Cell cell = rowToInsert.createCell(i);
+                    Field field = fields[i];
+                    field.setAccessible(true);
+                    try {
+                        cell.setCellValue(field.get(lotteryResult).toString());
+                    } catch (NullPointerException e) {
+                        cell.setCellValue("");
+                    }
+                }
             }
 
             for (int i = 0; i < 5; i++) {

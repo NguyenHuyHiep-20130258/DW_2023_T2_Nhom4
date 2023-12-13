@@ -2,6 +2,7 @@ package org.example.Module;
 
 import org.example.Database.DBConnect;
 import org.example.Entity.LotteryResult;
+import org.example.Mail.ErrorEmailSender;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -11,6 +12,8 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class CrawlData {
@@ -20,12 +23,10 @@ public class CrawlData {
             Document document;
             document = Jsoup.connect(source_path + region).userAgent("Mozilla/5.0").get();
             LocalDate date = LocalDate.now();
-//            LocalDate date = LocalDate.of(2023, 11, 30);
+            List<LotteryResult> list = new ArrayList<LotteryResult>();
             String dateNow = date.getYear() + "-" + (date.getMonthValue() < 10 ? "0" + date.getMonthValue() : date.getMonthValue()) + "-" + (date.getDayOfMonth() < 10 ? "0" + date.getDayOfMonth() : date.getDayOfMonth());
             String substring = region.substring(region.indexOf("xs") + 2, region.indexOf("xs") + 4);
             System.out.println(substring);
-//            String currentResultDate = (!substring.equals("mb") ? substring + "_kqngay_" : "kqngay_") + (date.getDayOfMonth() < 10 ? "0" + date.getDayOfMonth() : date.getDayOfMonth()) + (date.getMonthValue() < 10 ? "0" + date.getMonthValue() : date.getMonthValue()) + date.getYear() + "_kq";
-//            Element table = Objects.requireNonNull(document.getElementById(currentResultDate)).select("#" + currentResultDate + " table:first-child").get(0);
              Element table = document.getElementsByClass("section").get(1).select("table:first-child").get(0);
             int i = 2;
             if (substring.equals("mb")) {
@@ -37,7 +38,7 @@ public class CrawlData {
                     String prize = "Giải " + table.select("tbody tr:nth-child(" + j + ") td:first-child").get(0).text();
                     for (Element number : numbers) {
                         LotteryResult result = new LotteryResult("Miền Bắc", provinceName, dateNow, prize, number.text());
-                        DataToExcel.saveToFile(result, dateNow, location);
+                        list.add(result);
                         System.out.println(result);
                     }
                 }
@@ -51,12 +52,12 @@ public class CrawlData {
                         for (Element number : numbers) {
                             if(substring.equals("mt")) {
                                 LotteryResult result = new LotteryResult("Miền Trung", provinceName, dateNow, prize, number.text());
-                                DataToExcel.saveToFile(result, dateNow, location);
+                                list.add(result);
                                 System.out.println(result);
                             }
                             else {
                                 LotteryResult result = new LotteryResult("Miền Nam", provinceName, dateNow, prize, number.text());
-                                DataToExcel.saveToFile(result, dateNow, location);
+                                list.add(result);
                                 System.out.println(result);
                             }
 
@@ -65,10 +66,12 @@ public class CrawlData {
                     i++;
                 }
             }
+            DataToExcel.saveToFile(list, dateNow, location);
         } catch (IOException e) {
             String date = LocalDate.now().toString();
             e.printStackTrace();
             DBConnect.insertErrorStatus(connection, id,"ERROR", "Fail to crawl data: " + e, date);
+            ErrorEmailSender.sendMail("Crawler", "Fail " + e);
             DBConnect.getConnection().close();
         }
     }

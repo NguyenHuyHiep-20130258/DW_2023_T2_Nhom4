@@ -2,6 +2,7 @@ package org.example;
 
 import org.example.Database.DBConnect;
 import org.example.Entity.DataFileConfig;
+import org.example.Mail.ErrorEmailSender;
 import org.example.Module.*;
 
 import java.sql.Connection;
@@ -13,7 +14,6 @@ public class Main {
     public static void main(String[] args) {
         try (Connection connection = DBConnect.getConnection()) {
             String date = LocalDate.now().toString();
-//            String date = "2023-11-30";
             List<DataFileConfig> configs = DBConnect.getConfigurationsWithFlagOne(connection);
             for (DataFileConfig config : configs) {
                 String status = DBConnect.getLatestStatusWithoutError(connection, config.getId());
@@ -57,6 +57,7 @@ public class Main {
 
         } catch (SQLException e) {
             e.printStackTrace();
+            ErrorEmailSender.sendMail("Can not connect to database", "Fail " + e);
         }
     }
 }

@@ -1,6 +1,7 @@
 package org.example.Module;
 
 import org.example.Database.DBConnect;
+import org.example.Mail.ErrorEmailSender;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -20,6 +21,7 @@ public class AggregateData {
         catch (SQLException e) {
             e.printStackTrace();
             DBConnect.insertErrorStatus(connection, id,"ERROR", "Fail to aggregate data: " + e, date);
+            ErrorEmailSender.sendMail("Aggregate data", "Fail " + e);
             DBConnect.getConnection().close();
         }
 

@@ -1,6 +1,7 @@
 package org.example.Module;
 
 import org.example.Database.DBConnect;
+import org.example.Mail.ErrorEmailSender;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -28,11 +29,12 @@ public class TransformDimToFact {
             callableStatement3.close();
             callableStatement4.close();
 
-            System.out.println("Tranform successfully!");
+            System.out.println("Transform successfully!");
             DBConnect.insertStatus(connection, id, "TRANSFORMED", date);
         }
         catch (SQLException e) {
             DBConnect.insertErrorStatus(connection, id,"ERROR", "Fail to tranform: " + e, date);
+            ErrorEmailSender.sendMail("Transform", "Fail " + e);
             DBConnect.getConnection().close();
             e.printStackTrace();
         }
