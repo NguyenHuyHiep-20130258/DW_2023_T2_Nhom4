@@ -49,6 +49,33 @@ BEGIN
         lr.prize NOT IN (SELECT name FROM warehouse.prize_dim);
 END
 
+CREATE PROCEDURE Transform()
+BEGIN
+-- (Transform) 9.6. Xóa bảng temp_fact nếu nó tồn tại trong db
+ DROP TEMPORARY TABLE IF EXISTS temp_fact;
+-- (Transform)  9.7. Tạo bảng tạm temp_fact
+CREATE TEMPORARY TABLE temp_fact AS
+-- (Transform)  9.8. Bảng lottery_result left join trường region, province, prize, date với bảng region_dim, province_dim, prize_dim, date_dim tương ứng của db warehouse, lấy ra các key và insert nó vào bảng tạm temp_fact
+SELECT
+    rd.region_key,
+    pd.province_key,
+    dd.date_key,
+    prd.prize_key,
+    lr.winning_number,
+    COALESCE(dd.date_key, CURRENT_DATE) AS created_at,
+    99999 AS updated_at
+FROM
+    warehouse.lottery_result lr
+        LEFT JOIN
+    warehouse.region_dim rd ON lr.region = rd.name
+        LEFT JOIN
+    warehouse.province_dim pd ON lr.province = pd.name
+        LEFT JOIN
+    warehouse.date_dim dd ON lr.date = dd.full_date
+        LEFT JOIN
+    warehouse.prize_dim prd ON lr.prize = prd.name;
+END
+
 CREATE DEFINER = CURRENT_USER PROCEDURE `TransformAll`()
 BEGIN
 	CALL PROCEDURE CopyDataFromStagingToWarehouse();
