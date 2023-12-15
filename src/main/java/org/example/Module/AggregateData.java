@@ -13,8 +13,7 @@ public class AggregateData {
             DBConnect.insertStatus(connection, id, "AGGREGATING", date);
             CallableStatement callableStatement = connection.prepareCall("{call AggregateData()}");
             callableStatement.execute();
-            callableStatement.close()
-            ;
+            callableStatement.close();
             System.out.println("aggregate successfully!");
             DBConnect.insertStatus(connection, id, "AGGREGATED", date);
         }
