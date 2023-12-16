@@ -9,21 +9,27 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.lang.reflect.Field;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.example.Database.DBConnect;
 import org.example.Entity.LotteryResult;
+import org.example.Mail.ErrorEmailSender;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.List;
 
 public class DataToExcel {
-    public static void saveToFile(List<LotteryResult> resultList, String dateNow, String location) throws IOException {
+    public static void saveToFile(List<LotteryResult> resultList, String dateNow, String location,int id, Connection connection) throws IOException, SQLException {
         try {
+            //(Crawl) 7.5. Tạo 1 file excel tại thư mục theo location trong bảng data_file_configs và đặt tên file theo định dạng là XSKT_YYYY-MM-DD.xlxs
             String excelFilePath = location + "\\XSKT_" + dateNow + ".xlsx";
             Workbook workbook = getWorkbook(excelFilePath);
             Sheet sheet = workbook.getSheetAt(0);
 
             int lastRowIndex = sheet.getLastRowNum();
-
+            //(Crawl) 7.6. Lấy từng dòng dữ liệu LotteryResult trong list để đưa vào file excel
             for (LotteryResult lotteryResult : resultList) {
                 lastRowIndex++;
                 Row rowToInsert = sheet.getRow(lastRowIndex);
@@ -53,7 +59,13 @@ public class DataToExcel {
 
             System.out.println("Success");
         } catch (Exception e) {
-            e.printStackTrace();
+            String date = LocalDate.now().toString();
+            //(Crawl) 7.8. insert vào data_files với status = ERROR và note là lỗi của nó
+            DBConnect.insertErrorStatus(connection, id,"ERROR", "Fail to crawl data: " + e, date);
+            //(Crawl) 7.9. Gửi mail báo lỗi
+            ErrorEmailSender.sendMail("Crawler", "Fail " + e);
+            //(Crawl) 7.10. Đóng connection database control
+            DBConnect.getConnection().close();
         }
     }
     private static Workbook getWorkbook(String excelFilePath) throws IOException {
