@@ -11,7 +11,7 @@
  Target Server Version : 100427
  File Encoding         : 65001
 
- Date: 07/12/2023 12:52:39
+ Date: 08/12/2023 16:02:07
 */
 
 SET NAMES utf8mb4;
@@ -55,7 +55,7 @@ CREATE TABLE `data_files`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `fk_data_files_df_config`(`df_config_id` ASC) USING BTREE,
   CONSTRAINT `fk_data_files_df_config` FOREIGN KEY (`df_config_id`) REFERENCES `data_file_configs` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 579 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 626 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of data_files
@@ -141,22 +141,20 @@ INSERT INTO `data_files` VALUES (559, 1, 'XSKT_06_12_2023', 'AGGREGATED', '2023-
 INSERT INTO `data_files` VALUES (560, 1, 'XSKT_06_12_2023', 'LOADINGM', '2023-12-06 20:35:59', 'Data is loadingm', '2023-12-06 20:35:59', '9999-12-31 23:59:59');
 INSERT INTO `data_files` VALUES (561, 1, 'XSKT_06_12_2023', 'LOADEDM', '2023-12-06 20:35:59', 'Data is loadedm', '2023-12-06 20:35:59', '9999-12-31 23:59:59');
 INSERT INTO `data_files` VALUES (562, 1, 'XSKT_06_12_2023', 'FINISHED', '2023-12-06 20:35:59', 'Data is finished', '2023-12-06 20:35:59', '9999-12-31 23:59:59');
-INSERT INTO `data_files` VALUES (563, 1, 'XSKT_07_12_2023', 'CRAWLING', '2023-12-07 12:49:30', 'Data is crawling', '2023-12-07 12:49:30', '9999-12-31 23:59:59');
-INSERT INTO `data_files` VALUES (564, 1, 'XSKT_07_12_2023', 'CRAWLING', '2023-12-07 12:49:56', 'Data is crawling', '2023-12-07 12:49:56', '9999-12-31 23:59:59');
-INSERT INTO `data_files` VALUES (565, 1, 'XSKT_07_12_2023', 'CRAWLED', '2023-12-07 12:50:12', 'Data is crawled', '2023-12-07 12:50:12', '9999-12-31 23:59:59');
-INSERT INTO `data_files` VALUES (566, 1, 'XSKT_07_12_2023', 'EXTRACTING', '2023-12-07 12:50:12', 'Data is extracting', '2023-12-07 12:50:12', '9999-12-31 23:59:59');
-INSERT INTO `data_files` VALUES (567, 1, 'XSKT_07_12_2023', 'EXTRACTED', '2023-12-07 12:50:13', 'Data is extracted', '2023-12-07 12:50:13', '9999-12-31 23:59:59');
-INSERT INTO `data_files` VALUES (568, 1, 'XSKT_07_12_2023', 'TRANSFORMING', '2023-12-07 12:50:13', 'Data is transforming', '2023-12-07 12:50:13', '9999-12-31 23:59:59');
-INSERT INTO `data_files` VALUES (569, 1, 'XSKT_07_12_2023', 'ERROR', '2023-12-07 12:50:13', 'Fail to tranform: java.sql.SQLSyntaxErrorException: PROCEDURE control.Transform does not exist', '2023-12-07 12:50:13', '9999-12-31 23:59:59');
-INSERT INTO `data_files` VALUES (570, 1, 'XSKT_07_12_2023', 'TRANSFORMING', '2023-12-07 12:50:54', 'Data is transforming', '2023-12-07 12:50:54', '9999-12-31 23:59:59');
-INSERT INTO `data_files` VALUES (571, 1, 'XSKT_07_12_2023', 'TRANSFORMED', '2023-12-07 12:50:54', 'Data is transformed', '2023-12-07 12:50:54', '9999-12-31 23:59:59');
-INSERT INTO `data_files` VALUES (572, 1, 'XSKT_07_12_2023', 'LOADINGWH', '2023-12-07 12:50:54', 'Data is loadingwh', '2023-12-07 12:50:54', '9999-12-31 23:59:59');
-INSERT INTO `data_files` VALUES (573, 1, 'XSKT_07_12_2023', 'LOADEDWH', '2023-12-07 12:50:54', 'Data is loadedwh', '2023-12-07 12:50:54', '9999-12-31 23:59:59');
-INSERT INTO `data_files` VALUES (574, 1, 'XSKT_07_12_2023', 'AGGREGATING', '2023-12-07 12:50:54', 'Data is aggregating', '2023-12-07 12:50:54', '9999-12-31 23:59:59');
-INSERT INTO `data_files` VALUES (575, 1, 'XSKT_07_12_2023', 'AGGREGATED', '2023-12-07 12:50:54', 'Data is aggregated', '2023-12-07 12:50:54', '9999-12-31 23:59:59');
-INSERT INTO `data_files` VALUES (576, 1, 'XSKT_07_12_2023', 'LOADINGM', '2023-12-07 12:50:54', 'Data is loadingm', '2023-12-07 12:50:54', '9999-12-31 23:59:59');
-INSERT INTO `data_files` VALUES (577, 1, 'XSKT_07_12_2023', 'LOADEDM', '2023-12-07 12:50:54', 'Data is loadedm', '2023-12-07 12:50:54', '9999-12-31 23:59:59');
-INSERT INTO `data_files` VALUES (578, 1, 'XSKT_07_12_2023', 'FINISHED', '2023-12-07 12:50:54', 'Data is finished', '2023-12-07 12:50:54', '9999-12-31 23:59:59');
+INSERT INTO `data_files` VALUES (612, 1, 'XSKT_07_12_2023', 'CRAWLING', '2023-12-08 15:52:28', 'Data is crawling', '2023-12-08 15:52:28', '9999-12-31 23:59:59');
+INSERT INTO `data_files` VALUES (613, 1, 'XSKT_07_12_2023', 'CRAWLED', '2023-12-07 15:52:34', 'Data is crawled', '2023-12-08 15:52:34', '9999-12-31 23:59:59');
+INSERT INTO `data_files` VALUES (614, 1, 'XSKT_07_12_2023', 'EXTRACTING', '2023-12-07 15:56:35', NULL, '2023-12-08 15:56:35', '9999-12-31 23:59:59');
+INSERT INTO `data_files` VALUES (615, 1, 'XSKT_07_12_2023', 'EXTRACTING', '2023-12-07 15:57:26', 'Data is extracting', '2023-12-08 15:57:26', '9999-12-31 23:59:59');
+INSERT INTO `data_files` VALUES (616, 1, 'XSKT_07_12_2023', 'EXTRACTED', '2023-12-08 15:57:27', 'Data is extracted', '2023-12-08 15:57:27', '9999-12-31 23:59:59');
+INSERT INTO `data_files` VALUES (617, 1, 'XSKT_07_12_2023', 'TRANSFORMING', '2023-12-07 15:57:27', 'Data is transforming', '2023-12-08 15:57:27', '9999-12-31 23:59:59');
+INSERT INTO `data_files` VALUES (618, 1, 'XSKT_07_12_2023', 'TRANSFORMED', '2023-12-07 15:57:27', 'Data is transformed', '2023-12-08 15:57:27', '9999-12-31 23:59:59');
+INSERT INTO `data_files` VALUES (619, 1, 'XSKT_07_12_2023', 'LOADINGFACT', '2023-12-07 15:57:28', 'Data is loadingfact', '2023-12-08 15:57:28', '9999-12-31 23:59:59');
+INSERT INTO `data_files` VALUES (620, 1, 'XSKT_07_12_2023', 'LOADEDFACT', '2023-12-07 15:57:28', 'Data is loadedfact', '2023-12-08 15:57:28', '9999-12-31 23:59:59');
+INSERT INTO `data_files` VALUES (621, 1, 'XSKT_07_12_2023', 'AGGREGATING', '2023-12-07 15:57:28', 'Data is aggregating', '2023-12-08 15:57:28', '9999-12-31 23:59:59');
+INSERT INTO `data_files` VALUES (622, 1, 'XSKT_07_12_2023', 'AGGREGATED', '2023-12-07 15:57:28', 'Data is aggregated', '2023-12-08 15:57:28', '9999-12-31 23:59:59');
+INSERT INTO `data_files` VALUES (623, 1, 'XSKT_07_12_2023', 'LOADINGM', '2023-12-07 15:57:28', 'Data is loadingm', '2023-12-08 15:57:28', '9999-12-31 23:59:59');
+INSERT INTO `data_files` VALUES (624, 1, 'XSKT_07_12_2023', 'LOADEDM', '2023-12-07 15:57:28', 'Data is loadedm', '2023-12-08 15:57:28', '9999-12-31 23:59:59');
+INSERT INTO `data_files` VALUES (625, 1, 'XSKT_08_12_2023XSKT_07_12_2023', 'FINISHED', '2023-12-07 15:57:28', 'Data is finished', '2023-12-08 15:57:28', '9999-12-31 23:59:59');
 
 -- ----------------------------
 -- Procedure structure for AddPrizeDim
@@ -355,8 +353,8 @@ delimiter ;;
 CREATE PROCEDURE `LoadToMart`()
 BEGIN
 		TRUNCATE TABLE datamart.lottery_result_mart;
-		INSERT INTO datamart.lottery_result_mart (id, region, province, date, prize, winning_number)
-		SELECT id, region, province, date, prize, winning_number FROM data_aggregate.lottery_result_aggregate;
+		INSERT INTO datamart.lottery_result_mart (region, province, date, prize, winning_number)
+		SELECT region, province, date, prize, winning_number FROM data_aggregate.lottery_result_aggregate;
 
 END
 ;;
@@ -371,7 +369,6 @@ CREATE PROCEDURE `LoadToWareHouse`()
 BEGIN
 		INSERT INTO warehouse.lottery_result_fact (region_key, province_key, date_key, prize_key, winning_number, created_at, updated_at)
 		SELECT region_key, province_key, date_key, prize_key, winning_number, created_at, updated_at from control.temp_fact;
-    DROP TABLE IF EXISTS control.temp_fact;
 END
 ;;
 delimiter ;
