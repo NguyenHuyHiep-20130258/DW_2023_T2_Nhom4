@@ -1,6 +1,8 @@
 package org.example.Database;
 
 
+import org.example.Entity.DataFileConfig;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +22,28 @@ public class DBConnect {
         return connection;
     }
 
+    public static List<DataFileConfig> getConfigurationsWithFlagOne(Connection connection) {
+        List<DataFileConfig> configurations = new ArrayList<>();
 
+        String query = "SELECT id, name, description, source_path, location, flag FROM control.data_file_configs WHERE flag = 1";
+        try (Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(query)) {
+
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                String name = resultSet.getString("id");
+                String description = resultSet.getString("description");
+                String source_path = resultSet.getString("source_path");
+                String location = resultSet.getString("location");
+                int flag = resultSet.getInt("flag");
+                configurations.add(new DataFileConfig(id, name, description, source_path, location, flag));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return configurations;
+    }
 
     public static String getLatestStatusWithoutError(Connection connection, int idConfig) {
         String status = "";

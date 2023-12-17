@@ -5,6 +5,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.example.Database.DBConnect;
+import org.example.Mail.ErrorEmailSender;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -24,7 +25,6 @@ public class ExcelToDatabaseStaging {
     public static void  extractToStaging(String pathFile, Connection connection, int id, String date1) throws SQLException {
         try (FileInputStream excelFile = new FileInputStream(pathFile); Workbook workbook = new XSSFWorkbook(excelFile)) {
             Sheet sheet = workbook.getSheetAt(0);
-
             Iterator<Row> iterator = sheet.iterator();
             iterator.next();
             while (iterator.hasNext()) {
@@ -44,10 +44,14 @@ public class ExcelToDatabaseStaging {
 
                 callableStatement.execute();
             }
-            System.out.println("success!");
+            System.out.println("Extract successfully!");
         } catch (IOException | SQLException e) {
             e.printStackTrace();
-            DBConnect.insertErrorStatus(connection, id, "ERROR", "Fail to load to staging" + e, date1);
+            //(ExtractToStaging) 8.7. insert vào data_files với status = ERROR và note là lỗi của nó
+            DBConnect.insertErrorStatus(connection, id, "ERROR", "Fail file not found", date1);
+            //(ExtractToStaging) 8.8. Gửi mail báo lỗi
+            ErrorEmailSender.sendMail("Extract to staging", "file not found");
+            //(ExtractToStaging) 8.9. Đóng connection database control
             DBConnect.getConnection().close();
         }
     }
@@ -66,27 +70,43 @@ public class ExcelToDatabaseStaging {
         }
     }
 
-    public static void startLoadToStaging(int id, Connection connection, String location, String date) throws SQLException {
+    public static void startExtractToStaging(int id, Connection connection, String location, String date) throws SQLException {
+        //(ExtractToStaging) 8.1. insert vào data_files với status = EXTRACTING
         DBConnect.insertStatus(connection, id, "EXTRACTING", date);
+        //(ExtractToStaging) 8.2. Truncate bảng staging.lottery_result_staging
         try (CallableStatement callableStatement = connection.prepareCall("TRUNCATE staging.lottery_result_staging")) {
             callableStatement.execute();
+            //(ExtractToStaging) 8.3. Tìm file excel với đường dẫn là location có thời gian sữa chữa gần đây nhất
             Optional<File> latestExcelFile = findLatestExcelFile(location);
+            //(ExtractToStaging) 8.4. Có file
             if (latestExcelFile.isPresent()) {
                 File excelFile = latestExcelFile.get();
+                //(ExtractToStaging) 8.5. Lấy từng dòng dữ liệu trong excel để insert vào staging
                 extractToStaging(excelFile.getAbsolutePath(), connection, id, date);
+                //(ExtractToStaging) 8.6. insert vào data_files với status = EXTRACTED
                 DBConnect.insertStatus(connection, id, "EXTRACTED", date);
             } else {
-                DBConnect.insertErrorStatus(connection, id, "ERROR", "Fail to load to staging", date);
+                //(ExtractToStaging) 8.7. insert vào data_files với status = ERROR và note là lỗi của nó
+                DBConnect.insertErrorStatus(connection, id, "ERROR", "Fail file not found", date);
+                //(ExtractToStaging) 8.8. Gửi mail báo lỗi
+                ErrorEmailSender.sendMail("Extract to staging", "file not found");
+                //(ExtractToStaging) 8.9. Đóng connection database control
                 DBConnect.getConnection().close();
             }
         } catch (IOException e) {
             e.printStackTrace();
-            DBConnect.insertErrorStatus(connection, id,"ERROR", "Fail to load to staging: " + e, date);
+            //(ExtractToStaging) 8.7. insert vào data_files với status = ERROR và note là lỗi của nó
+            DBConnect.insertErrorStatus(connection, id,"ERROR", "Fail to extract to staging: " + e, date);
+            //(ExtractToStaging) 8.8. Gửi mail báo lỗi
+            ErrorEmailSender.sendMail("Extract to staging", "Fail " + e);
+            //(ExtractToStaging) 8.9. Đóng connection database control
             DBConnect.getConnection().close();
         } catch (SQLException e) {
-            DBConnect.insertErrorStatus(connection, id,"ERROR", "Fail to load to staging: " + e, date);
-            DBConnect.getConnection().close();
-            throw new RuntimeException(e);
+            //(ExtractToStaging) 8.7. insert vào data_files với status = ERROR và note là lỗi của nó
+            DBConnect.insertErrorStatus(connection, id,"ERROR", "Fail to extract to staging: " + e, date);
+            //(ExtractToStaging) 8.8. Gửi mail báo lỗi
+            ErrorEmailSender.sendMail("Extract to staging", "Fail " + e);
+            //(ExtractToStaging) 8.9. Đóng connection database control
         }
     }
 }
