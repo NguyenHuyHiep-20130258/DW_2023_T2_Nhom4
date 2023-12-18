@@ -1,6 +1,7 @@
 package org.example.Module;
 
 import org.example.Database.DBConnect;
+import org.example.Entity.DataFileConfig;
 import org.example.Entity.LotteryResult;
 import org.example.Mail.ErrorEmailSender;
 import org.jsoup.Jsoup;
@@ -27,8 +28,7 @@ public class CrawlData {
             List<LotteryResult> list = new ArrayList<LotteryResult>();
             String dateNow = date.getYear() + "-" + (date.getMonthValue() < 10 ? "0" + date.getMonthValue() : date.getMonthValue()) + "-" + (date.getDayOfMonth() < 10 ? "0" + date.getDayOfMonth() : date.getDayOfMonth());
             String substring = region.substring(region.indexOf("xs") + 2, region.indexOf("xs") + 4);
-            System.out.println(substring);
-             Element table = document.getElementsByClass("section").get(1).select("table:first-child").get(0);
+             Element table = document.getElementsByClass("section").get(2).select("table:first-child").get(0);
             int i = 2;
             //(Crawl) 7.4. Lấy dữ liệu bằng script và lưu các dòng dữ liệu vào List <LotteryResult>
             if (substring.equals("mb")) {
@@ -84,16 +84,20 @@ public class CrawlData {
         DBConnect.insertStatus(connection, id, "CRAWLING", date);
         //(Crawl) 7.2. Lấy lần lượt từng địa chỉ từng miền của trang web
         for (String r : regions)
-            //(Crawl) 7.3, 7.4, 7.5, 7.6
+            //(Crawl) 7.3, 7.4, 7.5, 7.6, 7.8, 7.9, 7.10, 7.11
             crawl(source_path, location, r, id, connection);
         System.out.println("Crawl data successfully!");
-        //(Crawl) 7.7. insert vào data_files với status = CRAWLED
+        //(Crawl) 7.12. insert vào data_files với status = CRAWLED
         DBConnect.insertStatus(connection, id, "CRAWLED", date);
     }
 
     public static void main(String[] args) throws SQLException {
         String date = LocalDate.now().toString();
         Connection connection = DBConnect.getConnection();
-        startCrawl("https://xoso.com.vn/2", "E:\\Warehouse", 1, connection, date);
+        List<DataFileConfig> configs = DBConnect.getConfigurationsWithFlagOne(connection);
+        for (DataFileConfig config : configs) {
+            startCrawl(config.getSource_path(), config.getLocation(), config.getId(), connection, date);
+        }
+
     }
 }

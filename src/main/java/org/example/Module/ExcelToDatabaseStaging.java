@@ -5,6 +5,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.example.Database.DBConnect;
+import org.example.Entity.DataFileConfig;
 import org.example.Mail.ErrorEmailSender;
 
 import java.io.File;
@@ -16,8 +17,10 @@ import java.nio.file.Paths;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
 
@@ -108,5 +111,15 @@ public class ExcelToDatabaseStaging {
             ErrorEmailSender.sendMail("Extract to staging", "Fail " + e);
             //(ExtractToStaging) 8.9. Đóng connection database control
         }
+    }
+
+    public static void main(String[] args) throws SQLException {
+        String date = LocalDate.now().toString();
+        Connection connection = DBConnect.getConnection();
+        List<DataFileConfig> configs = DBConnect.getConfigurationsWithFlagOne(connection);
+        for (DataFileConfig config : configs) {
+            startExtractToStaging(config.getId(), connection, config.getLocation(), date);
+        }
+
     }
 }
