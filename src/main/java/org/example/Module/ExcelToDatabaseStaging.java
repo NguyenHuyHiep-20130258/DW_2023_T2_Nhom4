@@ -51,9 +51,9 @@ public class ExcelToDatabaseStaging {
         } catch (IOException | SQLException e) {
             e.printStackTrace();
             //(ExtractToStaging) 8.7. insert vào data_files với status = ERROR và note là lỗi của nó
-            DBConnect.insertErrorStatus(connection, id, "ERROR", "Fail file not found", date1);
+            DBConnect.insertErrorStatus(connection, id, "ERROR", "Fail " + e, date1);
             //(ExtractToStaging) 8.8. Gửi mail báo lỗi
-            ErrorEmailSender.sendMail("Extract to staging", "file not found");
+            ErrorEmailSender.sendMail("Extract to staging", "Fail" + e);
             //(ExtractToStaging) 8.9. Đóng connection database control
             DBConnect.getConnection().close();
         }
@@ -110,6 +110,7 @@ public class ExcelToDatabaseStaging {
             //(ExtractToStaging) 8.8. Gửi mail báo lỗi
             ErrorEmailSender.sendMail("Extract to staging", "Fail " + e);
             //(ExtractToStaging) 8.9. Đóng connection database control
+            DBConnect.getConnection().close();
         }
     }
 

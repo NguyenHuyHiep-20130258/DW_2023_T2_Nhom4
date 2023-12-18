@@ -28,7 +28,7 @@ public class CrawlData {
             List<LotteryResult> list = new ArrayList<LotteryResult>();
             String dateNow = date.getYear() + "-" + (date.getMonthValue() < 10 ? "0" + date.getMonthValue() : date.getMonthValue()) + "-" + (date.getDayOfMonth() < 10 ? "0" + date.getDayOfMonth() : date.getDayOfMonth());
             String substring = region.substring(region.indexOf("xs") + 2, region.indexOf("xs") + 4);
-             Element table = document.getElementsByClass("section").get(2).select("table:first-child").get(0);
+             Element table = document.getElementsByClass("section").get(1).select("table:first-child").get(0);
             int i = 2;
             //(Crawl) 7.4. Lấy dữ liệu bằng script và lưu các dòng dữ liệu vào List <LotteryResult>
             if (substring.equals("mb")) {
@@ -65,9 +65,9 @@ public class CrawlData {
                     i++;
                 }
             }
-            //(Crawl) 7.5, 7.6 trong model DataToExcel
+            //(Crawl) 7.5, 7.6, 7.7, 7.8, 7.9, 7.10, 7.11 trong model DataToExcel
             DataToExcel.saveToFile(list, dateNow, location,id, connection);
-        } catch (IOException e) {
+        } catch (Exception e) {
             String date = LocalDate.now().toString();
             e.printStackTrace();
             //(Crawl) 7.8. insert vào data_files với status = ERROR và note là lỗi của nó
