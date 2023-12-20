@@ -59,7 +59,20 @@ public class Transform {
         Connection connection = DBConnect.getConnection();
         List<DataFileConfig> configs = DBConnect.getConfigurationsWithFlagOne(connection);
         for (DataFileConfig config : configs) {
-            Transform(config.getId(), connection, date);
+            String status = DBConnect.getLatestStatusWithoutError(connection, config.getId());
+            if(status.equals("TRANSFORMING") || status.equals("EXTRACTED")) {
+                Transform(config.getId(), connection, date);
+            }
+            else {
+                if (status.equals("TRANSFORMED")) {
+                    System.out.println("Data has been transformed!");
+                    DBConnect.insertErrorStatus(connection, config.getId(), "ERROR", "Data has been transformed!", date);
+                }
+                else {
+                    System.out.println("Data has been another process!");
+                    DBConnect.insertErrorStatus(connection, config.getId(), "ERROR", "Data has been another process!", date);
+                }
+            }
         }
     }
 }

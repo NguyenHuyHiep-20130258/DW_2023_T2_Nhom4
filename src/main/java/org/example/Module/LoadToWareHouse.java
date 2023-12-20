@@ -40,7 +40,20 @@ public class LoadToWareHouse {
         Connection connection = DBConnect.getConnection();
         List<DataFileConfig> configs = DBConnect.getConfigurationsWithFlagOne(connection);
         for (DataFileConfig config : configs) {
-            LoadtoWareHouse(config.getId(), connection, date);
+            String status = DBConnect.getLatestStatusWithoutError(connection, config.getId());
+            if(status.equals("LOADINGWH") || status.equals("TRANSFORMED")) {
+                LoadtoWareHouse(config.getId(), connection, date);
+            }
+            else {
+                if (status.equals("LOADEDWH")) {
+                    System.out.println("Data has been loaded to warehouse!");
+                    DBConnect.insertErrorStatus(connection, config.getId(), "ERROR", "Data has been loaded to warehouse!", date);
+                }
+                else {
+                    System.out.println("Data has been another process!");
+                    DBConnect.insertErrorStatus(connection, config.getId(), "ERROR", "Data has been another process!", date);
+                }
+            }
         }
     }
 }

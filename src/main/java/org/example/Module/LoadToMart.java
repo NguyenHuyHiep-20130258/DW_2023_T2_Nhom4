@@ -39,7 +39,20 @@ public class LoadToMart {
         Connection connection = DBConnect.getConnection();
         List<DataFileConfig> configs = DBConnect.getConfigurationsWithFlagOne(connection);
         for (DataFileConfig config : configs) {
-            LoadToMart(config.getId(), connection, date);
+            String status = DBConnect.getLatestStatusWithoutError(connection, config.getId());
+            if(status.equals("LOADINGM") || status.equals("AGGREGATED")) {
+                LoadToMart(config.getId(), connection, date);
+            }
+            else {
+                if (status.equals("LOADEDM")) {
+                    System.out.println("Data has been loaded mart!");
+                    DBConnect.insertErrorStatus(connection, config.getId(), "ERROR", "Data has been loaded mart!", date);
+                }
+                else {
+                    System.out.println("Data has been another process!");
+                    DBConnect.insertErrorStatus(connection, config.getId(), "ERROR", "Data has been another process!", date);
+                }
+            }
         }
     }
 }

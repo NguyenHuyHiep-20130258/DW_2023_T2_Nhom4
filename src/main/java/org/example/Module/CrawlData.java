@@ -12,6 +12,7 @@ import org.jsoup.select.Elements;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.SQLNonTransientConnectionException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -96,7 +97,18 @@ public class CrawlData {
         Connection connection = DBConnect.getConnection();
         List<DataFileConfig> configs = DBConnect.getConfigurationsWithFlagOne(connection);
         for (DataFileConfig config : configs) {
-            startCrawl(config.getSource_path(), config.getLocation(), config.getId(), connection, date);
+            String status = DBConnect.getLatestStatusWithoutError(connection, config.getId());
+            if(status.equals("CRAWLING") || status.equals("FINISHED")) {
+                startCrawl(config.getSource_path(), config.getLocation(), config.getId(), connection, date);
+            }
+            if(status.equals("CRAWLED")) {
+                System.out.println("Data has been crawl!");
+                DBConnect.insertErrorStatus(connection, config.getId(), "ERROR", "Data has been crawl!", date);
+            }
+            else {
+                System.out.println("Data has been another process!");
+                DBConnect.insertErrorStatus(connection, config.getId(), "ERROR", "Data has been another process!", date);
+            }
         }
 
     }

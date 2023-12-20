@@ -39,7 +39,20 @@ public class AggregateData {
         Connection connection = DBConnect.getConnection();
         List<DataFileConfig> configs = DBConnect.getConfigurationsWithFlagOne(connection);
         for (DataFileConfig config : configs) {
-            aggregateData(config.getId(), connection, date);
+            String status = DBConnect.getLatestStatusWithoutError(connection, config.getId());
+            if(status.equals("AGGREGATING") || status.equals("LOADEDWH")) {
+                aggregateData(config.getId(), connection, date);
+            }
+            else {
+                if (status.equals("AGGREGATED")) {
+                    System.out.println("Data has been aggregated!");
+                    DBConnect.insertErrorStatus(connection, config.getId(), "ERROR", "Data has been aggregated!", date);
+                }
+                else {
+                    System.out.println("Data has been another process!");
+                    DBConnect.insertErrorStatus(connection, config.getId(), "ERROR", "Data has been another process!", date);
+                }
+            }
         }
     }
 }

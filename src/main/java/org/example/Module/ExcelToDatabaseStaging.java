@@ -119,7 +119,20 @@ public class ExcelToDatabaseStaging {
         Connection connection = DBConnect.getConnection();
         List<DataFileConfig> configs = DBConnect.getConfigurationsWithFlagOne(connection);
         for (DataFileConfig config : configs) {
-            startExtractToStaging(config.getId(), connection, config.getLocation(), date);
+            String status = DBConnect.getLatestStatusWithoutError(connection, config.getId());
+            if(status.equals("EXTRACTING") || status.equals("CRAWLED")) {
+                startExtractToStaging(config.getId(), connection, config.getLocation(), date);
+            }
+           else {
+                if (status.equals("EXTRACTED")) {
+                    System.out.println("Data has been extracted!");
+                    DBConnect.insertErrorStatus(connection, config.getId(), "ERROR", "Data has been extracted!", date);
+                }
+                else {
+                    System.out.println("Data has been another process!");
+                    DBConnect.insertErrorStatus(connection, config.getId(), "ERROR", "Data has been another process!", date);
+                }
+            }
         }
 
     }
