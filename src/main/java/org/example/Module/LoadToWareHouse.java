@@ -1,11 +1,14 @@
 package org.example.Module;
 
 import org.example.Database.DBConnect;
+import org.example.Entity.DataFileConfig;
 import org.example.Mail.ErrorEmailSender;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.List;
 
 public class LoadToWareHouse {
     public static void LoadtoWareHouse(int id, Connection connection, String date) throws SQLException {
@@ -30,6 +33,14 @@ public class LoadToWareHouse {
             //(LoadToWarehouse) 10.6. Đóng connection database control
             DBConnect.getConnection().close();
         }
+    }
 
+    public static void main(String[] args) throws SQLException {
+        String date = LocalDate.now().toString();
+        Connection connection = DBConnect.getConnection();
+        List<DataFileConfig> configs = DBConnect.getConfigurationsWithFlagOne(connection);
+        for (DataFileConfig config : configs) {
+            LoadtoWareHouse(config.getId(), connection, date);
+        }
     }
 }
