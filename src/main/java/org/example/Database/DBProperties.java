@@ -1,5 +1,8 @@
 package org.example.Database;
 
+import org.example.Mail.ErrorEmailSender;
+
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
 
@@ -8,9 +11,12 @@ public class DBProperties {
 
     static {
         try {
-            prop.load(DBProperties.class.getClassLoader().getResourceAsStream("db.properties"));
-        } catch (IOException ioException) {
-            ioException.printStackTrace();
+            FileInputStream config = new FileInputStream("E:\\Warehouse\\config.properties");
+            prop.load(config);
+            config.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+            ErrorEmailSender.sendMail("config", "Fail can't read file config.properties");
         }
     }
 
@@ -37,8 +43,15 @@ public class DBProperties {
     public static String getDbName() {
         return prop.get("db.databaseName").toString();
     }
+
     public static String getJdbcUrl() {
         return prop.get("db.jdbcUrl").toString();
+    }
+    public static String getRun() { return prop.get("run").toString();}
+    public static String getDate() { return prop.get("date").toString();}
+
+    public static void main(String[] args) {
+        System.out.println(getDate());
     }
 
 }
